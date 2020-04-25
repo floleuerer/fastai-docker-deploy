@@ -2,9 +2,15 @@
 
 A Docker image for deploying [fastai2](https://www.fast.ai/) models. Currently supports image classification models but i will add more use-cases later. The code is based on [fastai-serving](https://github.com/developmentseed/fastai-serving).
 
+## Prerequesites
+
+To build and test the image locally you need to install [`Docker`](https://docs.docker.com/get-docker/).
+
 ## Build
 
-First, export a fastai2 `Learner` with [`.export`](https://docs.fast.ai/basic_train.html#Deploying-your-model). Put the model file to `app/model.pkl`.
+First train and export a fastai2 `Learner` with [`learn.export()`](https://docs.fast.ai/basic_train.html#Deploying-your-model). Put the model file to `app/model.pkl`.
+
+Then build the docker image with the following command.
 
 ```
 # PORT=8080 && docker build -f Dockerfile --build-arg -t org/image:tag .
