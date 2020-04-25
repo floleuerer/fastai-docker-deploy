@@ -1,0 +1,7 @@
+__pycache__
+_test
+.vscode
+*.pkl
+*.pyc
+*.pyo
+*.pyd
