@@ -11,7 +11,7 @@ url = 'http://localhost:8080/analyze:predict'
 files = glob.glob("/path/to/images/*.jpg")
 
 bs = 10
-batches = int(math.ceil(files / bs))
+batches = int(math.ceil(len(files) / bs))
 print('batches', str(batches))
 
 for i in range(batches):
