@@ -2,7 +2,7 @@
 
 A Docker image for deploying [fastai2](https://www.fast.ai/) models. Currently supports image classification models but i will add more use-cases later. The code is based on [fastai-serving](https://github.com/developmentseed/fastai-serving).
 
-## Prerequesites
+## Prerequisites
 
 To build and test the image locally you need to install [`Docker`](https://docs.docker.com/get-docker/).
 
