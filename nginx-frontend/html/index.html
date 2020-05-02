@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Florian Leuerer, Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.6">
+    <title>Dog or Hot Dog?</title>
+
+    <script type="text/javascript" src="classify.js"></script>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <meta name="theme-color" content="#563d7c">
+
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <h3 class="masthead-brand">Dog or Hot dog?</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link active" href="#">Classify</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="https://github.com/floleuerer/fastai2-docker-deploy" target="_blank">GitHub</a>
+        <a class="nav-link" href="https://meansqua.red" target="_blank">meansqua.red</a>
+      </nav>
+    </div>
+  </header>
+
+  <main role="main" class="inner cover">
+    <p class="lead">Wanna know if your photo shows a Dog or a Hot dog? <br><i>powered by</i> <a class="font-italic font-weight-bold" href="http://www.fast.ai" target="_blank">fast.ai</a></p>
+
+    <p class="lead shadow p-5 mb-3 rounded bg-light text-dark" id="drop_zone" onclick="useExample();" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+        <b><i>Drag image here</i></b> to find out ... :) If you want to try a random image just <b><i>click here!</i></b>
+    </p>
+    <p id="images" class="lead" style="height: 300px"></p>
+    <p id="label" class="lead" style="height: 30px">It's a ...?</p>
+  </main>
+
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Based on Cover template for <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>. Images from <a href="https://www.pexels.com/" target="_blank">Pexels</a>.</p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
+
