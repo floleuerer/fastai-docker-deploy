@@ -42,6 +42,8 @@ Here's an overview of the architecture.
 
 ## Setup 
 
+The `nginx-frontend/config` and `nginx-frontend/html` folders are mounted into the Docker container. So it's **curcial to use the same the paths (so make sure to clone the repo in `/docker`)!** 
+
 ### Hostname
 The hostname "dog-or-hotdog.meansqua.red" has to be replaced with your **hostname** in the following files:
 ```
