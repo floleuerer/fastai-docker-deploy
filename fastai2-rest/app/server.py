@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import aiohttp
 import asyncio
 import uvicorn
@@ -39,26 +40,36 @@ async def analyze(request):
     else:
         tta = False
 
-    # read and decode images
-    images_b64 = data_json['images']
-    images_bytes = [b64decode(img) for img in images_b64]
-    images = [PILImage.create(io.BytesIO(ib)) for ib in images_bytes]
+    try: 
+        start_time = time.time()
 
-    # create fastai dataloader and get predictions
-    dl = learn.dls.test_dl(images)
-    if tta:
-        preds,_ = learn.tta(dl=dl)
-    else:
-        preds,_ = learn.get_preds(dl=dl)
-    
-    preds_dec = [np.argmax(p) for p in preds.tolist()]
-    labels = [learn.dls.vocab[pred] for pred in preds_dec]
-    probabilities = [np.max(p) for p in preds.tolist()]
+        # read and decode images
+        images_b64 = data_json['images']
+        images_bytes = [b64decode(img) for img in images_b64]
+        images = [PILImage.create(io.BytesIO(ib)) for ib in images_bytes]
 
-    # build response json
-    res_list = list(zip(labels,probabilities))
-    res_dicts = [{"label": d[0], "probability": d[1]} for d in res_list]
-    return JSONResponse({ 'predictions': res_dicts, 'tta': tta })
+        # create fastai dataloader and get predictions
+        dl = learn.dls.test_dl(images)
+        if tta:
+            preds,_ = learn.tta(dl=dl)
+        else:
+            preds,_ = learn.get_preds(dl=dl)
+        
+        preds_dec = [np.argmax(p) for p in preds.tolist()]
+        labels = [learn.dls.vocab[pred] for pred in preds_dec]
+        probabilities = [np.max(p) for p in preds.tolist()]
+
+        inference_time = time.time() - start_time
+
+        # build response json
+        res_list = list(zip(labels,probabilities))
+        res_dicts = [{"label": d[0], "probability": d[1]} for d in res_list]
+        res = { 'predictions': res_dicts, 'tta': tta, "time": inference_time }
+    except Exception as e:
+        print(e)
+        res = { "error": str)(sys.exc_info()[0])}
+        
+    return JSONResponse(res)
     
 
 @app.route('/analyze', methods=['GET'])
