@@ -66,9 +66,9 @@ async def analyze(request):
         res_dicts = [{"label": d[0], "probability": d[1]} for d in res_list]
         res = { 'predictions': res_dicts, 'tta': tta, "time": inference_time }
     except Exception as e:
-        error,_,st = sys.exc_info()
+        error,_,tb = sys.exc_info()
         print(e)
-        print(st)
+        print(e.with_traceback(tb))
         res = { "error": str(error) }
 
     return JSONResponse(res)
