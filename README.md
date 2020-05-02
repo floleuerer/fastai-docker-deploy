@@ -87,6 +87,10 @@ git clone https://github.com/floleuerer/fastai2-docker-deploy.git
 ### Download fastai2-model
 
 The fastai2 model is not part of the repository. The **Dog or HotDog** model can be downloaded [here](https://www.meansqua.red/files/model.pkl) and has to be copied to `fastai2-rest/app/model.pkl`.
+```
+cd /docker/fastai2-docker-deploy/fastai2-rest/app/
+wget https://www.meansqua.red/files/model.pkl
+```
 
 ### Build docker images
 
