@@ -2,10 +2,12 @@ version: "3.3"
 services:
   fastai2-rest:
     build: ./fastai2-rest
+    container_name: fastai2-rest
     environment:
       PORT: 8080
   nginx-frontend:
     build: ./nginx-frontend
+    container_name: nginx-frontend
     ports:
       - "80:80"
       - "443:443"
