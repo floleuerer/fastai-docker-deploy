@@ -11,27 +11,27 @@ If you are just intrested to deploy a model as a REST-API see `fastai2-rest` and
 Here's an overview of the architecture.
 
 ```
-           DigitalOcean Droplet
-+-------------------------------------+
-|               Docker                |
-|                                     |
-|                      /api calls     |
-|    +-----------+  interal redirect  |
-|    |           |     http 8080      |
-|    |  fastai2  | <------------+     |
-|    |           |              |     |
-|    |           |              |     |
-|    +-----------+              |     |   dog-or-hotdog.meansqua.red/api
-|      Container      +---------+-+   |          http(s) 80/443
-|                     |           |   |       redirect to fastai2
-|                     |           | <-------------------------------------+
-|                     |   nginx   |   |
-|                     |           | <-------------------------------------+
-|                     |           |   |    dog-or-hotdog.meansqua.red
-|                     +-----------+   |         http(s) 80/443
-|                       Container     |       Website nginx/html
-|                                     |
-+-------------------------------------+
+                DigitalOcean Droplet
+     +-------------------------------------+
+     |               Docker                |
+     |                                     |
+     |                      /api calls     |
+     |    +-----------+  interal redirect  |
+     |    |           |     http 8080      |
+     |    |  fastai2  | <------------+     |
+     |    |           |              |     |
+     |    |           |              |     |
+     |    +-----------+              |     |   dog-or-hotdog.meansqua.red/api   +------------+
+     |      Container      +-----------+   |          http(s) 80/443            |            |
+     |                     |           |   |       redirect to fastai2          |            |
+     |                     |           | <--------------------------------------+            |
+     |                     |   nginx   |   |                                    |   client   |
+     |                     |           | <--------------------------------------+            |
+     |                     |           |   |    dog-or-hotdog.meansqua.red      |            |
+     |                     +-----------+   |         http(s) 80/443             |            |
+     |                       Container     |       Website nginx/html           +------------+
+     |                                     |
+     +-------------------------------------+
 ```
 
 ## Prerequisites
