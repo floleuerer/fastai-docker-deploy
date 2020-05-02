@@ -1,10 +1,10 @@
 # fastai2-docker-deploy
 
-Building DeepLearning models is really easy with [fast.ai](https://www.fast.ai) - deploying models unfortunatley is not! So i tried to find a cheap and easy way, to deploy models with Docker as a REST-API (folder `fastai2-rest`). Besides that, i also tried to develop a "frontend" component using [nginx](https://www.nginx.com) to secure the API calls by enabling SSL with **letsencrypt**. I added a small Website so you can interact with the model :). 
+Building DeepLearning models is really easy with [fast.ai](https://www.fast.ai) - deploying models unfortunatley is not! So i tried to find a **cheap and easy** way, to deploy models with Docker as a REST-API (folder `fastai2-rest`). Besides that, i also to develop a "frontend" component using [nginx](https://www.nginx.com) to secure the API calls by enabling SSL with **letsencrypt**. I added a small Website so you can interact with the model :). 
 
 All of this is running on a **5 $ DigitalOcean Droplet**. See my website [Dog or HotDog?](https://dog-or-hotdog.meansqua.red/).
 
-If you are just intrested to deploy a model as a REST-API see `fastai2-rest` and the README there and my [blogpost](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html). 
+If you are just intrested in deploying a model as a REST-API see `fastai2-rest` and the README there and my [blogpost](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html). 
 
 ## Architecutre
 
@@ -45,7 +45,7 @@ Here's an overview of the architecture.
 The `nginx-frontend/config` and `nginx-frontend/html` folders are mounted into the Docker container. So it's **curcial to use the same the paths (so make sure to clone the repo in `/docker`)!** 
 
 ### Hostname
-The hostname "dog-or-hotdog.meansqua.red" has to be replaced with your **hostname** in the following files:
+The hostname `dog-or-hotdog.meansqua.red` has to be replaced with your **hostname** in the following files:
 ```
 nginx-frontend/config/default.config
 nginx-html/classify.js
@@ -156,5 +156,9 @@ The model labels are replaced with a human friendlier text (dog -> Dog and hot_d
 ### Add example images for random image classification
 Use the python scripts in `nginx-frontend/html/examples/` to create an `examples.json` that is used for the random image classificaiton (click on drop area). 
 Move `examples.json` to `ngnix-frontend/html/examples.json`.
+
+### Rebuild the docker containers
+
+See "Build docker images" above. 
 
 
