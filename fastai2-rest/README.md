@@ -4,7 +4,7 @@ A Docker image for deploying [fastai2](https://www.fast.ai/) models. Currently s
 
 See my [Blog Post](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html) on how to deploy your fastai2 model for 5 $ per month on [Digital Ocean](http://www.digitalocean.com).
 
-Supports `text` and `images` as input types and `classification`and `multi labeling`as ouput types / tasks.
+Supports `text` and `images` as input types and `classification` and `multi labeling` as ouput types / tasks.
 
 ## Prerequisites
 
