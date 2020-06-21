@@ -2,7 +2,6 @@ from fastai2.learner import load_learner
 import numpy as np
 import io
 from base64 import b64encode, b64decode
-from fastinference.inference import *
 from itertools import compress
 
 
@@ -65,8 +64,7 @@ class Inferencer:
     def get_preds(self, data_json):
         try:
             dl = self.get_dl(data_json)
-            # fastinference  - fully_decoded = True
-            preds = self.learn.get_preds(dl=dl, fully_decoded=True)
+            preds = self.learn.get_preds(dl=dl, with_decoded=True)
         except:
             raise
 
@@ -82,19 +80,20 @@ class Inferencer:
             vocab = self.learn.dls.vocab[1]
 
         # get decoded output for output_type
-        if self.output_type == 'class':   
-            preds_dec = None
-            labels = preds[0]
-            probabilities = [np.max(p).astype(float) for p in preds[1]]
+        if self.output_type == 'class':
+            preds = preds[0]   
+            preds_dec = [np.argmax(p) for p in preds.tolist()]
+            labels = [vocab[pred] for pred in preds_dec]
+            probabilities = [np.max(p) for p in preds.tolist()]
 
         if self.output_type == 'label':
-            preds_dec = None
-            labels  = []
+            labels = []
             probabilities = []
-            for i,p in enumerate(preds[0]):
-                labels.append(list(compress(vocab, preds[0][i])))
-                proba_float = list(map(float, preds[1][i]))
-                probabilities.append(list(compress(proba_float, preds[0][i])))
+            preds_dec = None
+            for i,p in enumerate(preds[2]):
+                labels.append(list(compress(vocab, p)))
+                proba_float = list(map(float, preds[0][i]))
+                probabilities.append(list(compress(proba_float, p)))
                 
         return preds_dec, labels, probabilities
 
