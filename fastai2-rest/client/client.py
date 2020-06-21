@@ -20,7 +20,7 @@ for i in range(batches):
     img_to = int((i+1)*bs)
     batch_files = files[img_from:img_to]
     images = []
-    for f in batch_files
+    for f in batch_files:
 
         # load images in batch and base64 encode them
         with open(f, 'rb') as open_file:
@@ -40,10 +40,14 @@ for i in range(batches):
     # make request
     r = requests.post(url, json=raw_data)
     r_json = r.json()
+    if r.status_code == 200:
+        # print predictions
+        for i,p in enumerate(r_json['predictions']):
+            print(r_json['predictions'][i]['label'], r_json['predictions'][i]['probability'])
 
-    # print predictions
-    for i,p in enumerate(r_json['predictions']):
-        print(r_json['predictions'][i]['label'], r_json['predictions'][i]['probability'])
+    else:
+        print(f'error: return code != 200 -> got return code {r.status_code}')
+        print(r_json)
        
 
 
