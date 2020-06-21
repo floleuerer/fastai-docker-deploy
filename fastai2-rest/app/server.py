@@ -1,5 +1,6 @@
 import os
 import sys
+import traceback
 import time
 import aiohttp
 import asyncio
@@ -8,26 +9,21 @@ from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 
-import io
 import json
-import torch
-import numpy as np
-from base64 import b64encode, b64decode
-from fastai2.learner import load_learner
-from fastai2.vision.core import PILImage
-
+from fastai2_inference import Inferencer
 
 app = Starlette()
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_headers=['X-Requested-With', 'Content-Type'])
 
 async def setup_learner():
-    learn = load_learner('model.pkl')
-    return learn
+    inf = Inferencer('model.pkl', input_type=None)
+    return inf
 
 loop = asyncio.get_event_loop()
 tasks = [asyncio.ensure_future(setup_learner())]
-learn = loop.run_until_complete(asyncio.gather(*tasks))[0]
+inf = loop.run_until_complete(asyncio.gather(*tasks))[0]
 loop.close()
+
 
 @app.route('/analyze:predict', methods=['POST'])
 async def analyze(request):
@@ -39,25 +35,13 @@ async def analyze(request):
         tta = data_json['tta']
     else:
         tta = False
+            
 
     try: 
         start_time = time.time()
 
-        # read and decode images
-        images_b64 = data_json['images']
-        images_bytes = [b64decode(img) for img in images_b64]
-        images = [PILImage.create(io.BytesIO(ib)) for ib in images_bytes]
-
-        # create fastai dataloader and get predictions
-        dl = learn.dls.test_dl(images)
-        if tta:
-            preds,_ = learn.tta(dl=dl)
-        else:
-            preds,_ = learn.get_preds(dl=dl)
-        
-        preds_dec = [np.argmax(p) for p in preds.tolist()]
-        labels = [learn.dls.vocab[pred] for pred in preds_dec]
-        probabilities = [np.max(p) for p in preds.tolist()]
+        preds = inf.get_preds(data_json)
+        preds_dec, labels, probabilities = inf.get_results(preds)
 
         inference_time = time.time() - start_time
 
@@ -65,13 +49,15 @@ async def analyze(request):
         res_list = list(zip(labels,probabilities))
         res_dicts = [{"label": d[0], "probability": d[1]} for d in res_list]
         res = { 'predictions': res_dicts, 'tta': tta, "time": inference_time }
+        status = 200
     except Exception as e:
-        error,_,tb = sys.exc_info()
-        print(e)
-        print(e.with_traceback(tb))
-        res = { "error": str(error) }
+        error = str(e)
+        print('error: ' + error)
+        print(traceback.print_exc())
+        res = { "error": error }
+        status = 400
 
-    return JSONResponse(res)
+    return JSONResponse(res, status_code=status)
     
 
 @app.route('/analyze', methods=['GET'])
