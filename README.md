@@ -4,7 +4,7 @@ Building DeepLearning models is really easy with [fast.ai](https://www.fast.ai) 
 
 All of this is running on a **5 $ DigitalOcean Droplet**. See my website [Dog or HotDog?](https://dog-or-hotdog.meansqua.red/).
 
-If you are just intrested in deploying a model as a REST-API see `fastai2-rest` and the README there and my [blogpost](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html). 
+**If you are just intrested in deploying a model as a REST-API** see `fastai2-rest` and the README there and my [blogpost](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html). 
 
 ## Architecutre
 
