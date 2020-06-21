@@ -18,7 +18,7 @@ class Inferencer:
             if 'TextLearner' in str(type(self.learn)):
                 self.input_type = 'text'
             else:
-                self.input_type = 'vision'
+                self.input_type = 'image'
         else:
             self.input_type == input_type
 
@@ -46,11 +46,11 @@ class Inferencer:
 
 
     def get_dl(self, data_json):
-        if self.input_type == 'vision':
+        if self.input_type == 'image':
             if 'images' in data_json:
                 items = self.get_image_items(data_json['images'])
             else:
-                raise TypeError("Input type vision but no images in request!")
+                raise TypeError("Input type image but no images in request!")
             
         elif self.input_type == 'text':
             if 'texts' in data_json:
@@ -76,7 +76,7 @@ class Inferencer:
     def get_results(self, preds):
 
         # get vocab for input_type
-        if self.input_type == 'vision':
+        if self.input_type == 'image':
             vocab = self.learn.dls.vocab
         elif self.input_type == 'text':
             vocab = self.learn.dls.vocab[1]
