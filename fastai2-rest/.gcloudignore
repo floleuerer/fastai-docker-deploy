@@ -1,4 +1,3 @@
-Dockerfile
 README.md
 *.pyc
 *.pyo
@@ -6,4 +5,5 @@ README.md
 __pycache__
 LICENSE
 client
+_test
 _models
