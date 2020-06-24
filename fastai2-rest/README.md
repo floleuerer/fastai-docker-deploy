@@ -37,7 +37,7 @@ gcloud builds submit --tag gcr.io/<project-name>/<image-name>
 Deploy and run on Cloud Run
 
 ```
-gcloud run deploy --image gcr.io/<project-name>/<image-name> --platform managed --memory 512M
+gcloud run deploy --image gcr.io/<project-name>/<image-name> --platform managed --memory 1024M
 ```
 
 
