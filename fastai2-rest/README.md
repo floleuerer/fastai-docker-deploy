@@ -2,7 +2,7 @@
 
 A Docker image for deploying [fastai2](https://www.fast.ai/) models. Currently supports image classification models but i will add more use-cases later. The code is based on [fastai-serving](https://github.com/developmentseed/fastai-serving).
 
-See my [Blog Post](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html) on how to deploy your fastai2 model for 5 $ per month on [Digital Ocean](http://www.digitalocean.com).
+See my [Blog Post](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html) on how to deploy your fastai2 model for 5 $ per month on [Digital Ocean](http://www.digitalocean.com). The `fastai2-rest` image can also easily be deployed on [Google Cloud Run](https://cloud.google.com/run) - see the instructions below.
 
 Supports `text` and `images` as input types and `classification` and `multi labeling` as ouput types / tasks.
 
@@ -10,21 +10,36 @@ Supports `text` and `images` as input types and `classification` and `multi labe
 
 To build and test the image locally you need to install [Docker](https://docs.docker.com/get-docker/).
 
-## Build
+## Build & Run
 
 First train and export a fastai2 `Learner` with [`learn.export()`](https://docs.fast.ai/basic_train.html#Deploying-your-model). Put the model file to `app/model.pkl`.
 
-Then build the docker image with the following command.
+Then build and run the docker image with the following commands.
+
+### Docker
 
 ```
 $ PORT=8080 && docker build -f Dockerfile -t org/image:tag .
 ```
 
-## Run
+Run the Docker-Image:
 
 ```
 $ docker run --rm -p 8080:8080 -t org/image:tag .
 ```
+
+### Google Cloud Run
+
+```
+gcloud builds submit --tag gcr.io/<project-name>/<image-name>
+```
+
+Deploy and run on Cloud Run
+
+```
+gcloud run deploy --image gcr.io/<project-name>/<image-name> --platform managed --memory 512M
+```
+
 
 ## Use
 
