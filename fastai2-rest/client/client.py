@@ -39,8 +39,8 @@ for i in range(batches):
 
     # make request
     r = requests.post(url, json=raw_data)
-    r_json = r.json()
     if r.status_code == 200:
+        r_json = r.json()
         # print predictions
         for i,p in enumerate(r_json['predictions']):
             print(r_json['predictions'][i]['label'], r_json['predictions'][i]['probability'])
