@@ -1,4 +1,4 @@
-from fastai2.learner import load_learner
+from fastai.learner import load_learner
 import numpy as np
 import io
 from base64 import b64encode, b64decode

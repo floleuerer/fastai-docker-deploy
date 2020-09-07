@@ -10,19 +10,16 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 
 import json
-from fastai2_inference import Inferencer
+from fastai_inference import Inferencer
 
 app = Starlette()
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_headers=['X-Requested-With', 'Content-Type'])
 
-async def setup_learner():
+def setup_learner():
     inf = Inferencer('model.pkl', input_type=None)
     return inf
 
-loop = asyncio.get_event_loop()
-tasks = [asyncio.ensure_future(setup_learner())]
-inf = loop.run_until_complete(asyncio.gather(*tasks))[0]
-loop.close()
+inf = setup_learner()
 
 
 @app.route('/analyze:predict', methods=['POST'])

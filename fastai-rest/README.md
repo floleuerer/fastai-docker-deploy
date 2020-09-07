@@ -1,8 +1,8 @@
-# Deploy fastai2 models with Docker
+# Deploy fastai models with Docker
 
-A Docker image for deploying [fastai2](https://www.fast.ai/) models. Currently supports image classification models but i will add more use-cases later. The code is based on [fastai-serving](https://github.com/developmentseed/fastai-serving).
+A Docker image for deploying [fastai](https://www.fast.ai/) models. Currently supports image classification models but i will add more use-cases later. The code is based on [fastai-serving](https://github.com/developmentseed/fastai-serving).
 
-See my [Blog Post](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html) on how to deploy your fastai2 model for 5 $ per month on [Digital Ocean](http://www.digitalocean.com). The `fastai2-rest` image can also easily be deployed on [Google Cloud Run](https://cloud.google.com/run) - see the instructions below.
+See my [Blog Post](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html) on how to deploy your fastai model for 5 $ per month on [Digital Ocean](http://www.digitalocean.com). The `fastai-rest` image can also easily be deployed on [Google Cloud Run](https://cloud.google.com/run) - see the instructions below.
 
 Supports `text` and `images` as input types and `classification` and `multi labeling` as ouput types / tasks.
 
@@ -12,7 +12,7 @@ To build and test the image locally you need to install [Docker](https://docs.do
 
 ## Build & Run
 
-First train and export a fastai2 `Learner` with [`learn.export()`](https://docs.fast.ai/basic_train.html#Deploying-your-model). Put the model file to `app/model.pkl`.
+First train and export a fastai `Learner` with [`learn.export()`](https://docs.fast.ai/basic_train.html#Deploying-your-model). Put the model file to `app/model.pkl`.
 
 Then build and run the docker image with the following commands.
 

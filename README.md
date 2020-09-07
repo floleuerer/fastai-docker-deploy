@@ -1,10 +1,10 @@
-# fastai2-docker-deploy
+# fastai-docker-deploy
 
-Building DeepLearning models is really easy with [fast.ai](https://www.fast.ai) - deploying models unfortunatley is not! So i tried to find a **cheap and easy** way, to deploy models with Docker as a REST-API (folder `fastai2-rest`). Besides that, i also to develop a "frontend" component using [nginx](https://www.nginx.com) to secure the API calls by enabling SSL with **letsencrypt**. I added a small Website so you can interact with the model :). 
+Building DeepLearning models is really easy with [fast.ai](https://www.fast.ai) - deploying models unfortunatley is not! So i tried to find a **cheap and easy** way, to deploy models with Docker as a REST-API (folder `fastai-rest`). Besides that, i also to develop a "frontend" component using [nginx](https://www.nginx.com) to secure the API calls by enabling SSL with [letsencrypt](https://letsencrypt.org). I added a small Website so you can interact with the model :). 
 
 All of this is running on a **5 $ DigitalOcean Droplet**. See my website [Dog or HotDog?](https://dog-or-hotdog.meansqua.red/).
 
-**If you are just intrested in deploying a model as a REST-API** see `fastai2-rest` and the README there and my [blogpost](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html). 
+**If you are just intrested in deploying a model as a REST-API** see `fastai-rest` and the README there and my [blogpost](https://floleuerer.github.io/2020/04/26/deploy-digitalocean.html). 
 
 ## Architecutre
 
@@ -18,12 +18,12 @@ Here's an overview of the architecture.
      |                      /api calls     |
      |    +-----------+  interal redirect  |
      |    |           |     http 8080      |
-     |    |  fastai2  | <------------+     |
+     |    |  fastai   | <------------+     |
      |    |           |              |     |
      |    |           |              |     |
      |    +-----------+              |     |   dog-or-hotdog.meansqua.red/api   +------------+
      |      Container      +-----------+   |          http(s) 80/443            |            |
-     |                     |           |   |       redirect to fastai2          |            |
+     |                     |           |   |        redirect to fastai          |            |
      |                     |           | <--------------------------------------+            |
      |                     |   nginx   |   |                                    |   client   |
      |                     |           | <--------------------------------------+            |
@@ -81,21 +81,21 @@ The certificates are stored in `/etc/letsencrypt/live/<domainname>`.
 Clone this `repository` on your Droplet
 ```bash
 mkdir /docker && cd /docker
-git clone https://github.com/floleuerer/fastai2-docker-deploy.git
+git clone https://github.com/floleuerer/fastai-docker-deploy.git
 ```
 
-### Download fastai2-model
+### Download fastai-model
 
-The fastai2 model is not part of the repository. The **Dog or HotDog** model can be downloaded [here](https://www.meansqua.red/files/model.pkl) and has to be copied to `fastai2-rest/app/model.pkl`.
+The fastai model is not part of the repository. The **Dog or HotDog** model can be downloaded [here](https://www.meansqua.red/files/model.pkl) and has to be copied to `fastai-rest/app/model.pkl`.
 ```
-cd /docker/fastai2-docker-deploy/fastai2-rest/app/
+cd /docker/fastai-docker-deploy/fastai-rest/app/
 wget https://www.meansqua.red/files/model.pkl
 ```
 
 ### Build docker images
 
 ```bash
-cd /docker/fastai2-docker-deploy
+cd /docker/fastai-docker-deploy
 docker-compose build
 ```
 
@@ -103,7 +103,7 @@ docker-compose build
 
 After successfully building the docker images you can start / stop the app:
 ```bash
-cd /docker/fastai2-docker-deploy
+cd /docker/fastai-docker-deploy
 # start
 docker-compose up -d
 
@@ -114,7 +114,7 @@ docker-compose down
 
 ## Adopt project 
 
-To use this App with your own fastai2 image classification model, you have to make some adjustments.
+To use this App with your own fastai image classification model, you have to make some adjustments.
 
 ### Hostname
 The hostname "dog-or-hotdog.meansqua.red" has to be replaced with your hostname in the following files:
@@ -140,9 +140,9 @@ server {
 let url = "https://dog-or-hotdog.meansqua.red/api/analyze:predict";
 ```
 
-### fastai2-Model
+### fastai-Model
 
-Copy your exported model (`learn.export()`) to `fastai2-rest/app/model.pkl`.
+Copy your exported model (`learn.export()`) to `fastai-rest/app/model.pkl`.
 
 The model labels are replaced with a human friendlier text (dog -> Dog and hot_dog -> Hot Dog). Please replace and add all your class labels in `nginx-frontend/classes.json`.
 

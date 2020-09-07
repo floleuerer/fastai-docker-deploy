@@ -1,8 +1,8 @@
 version: "3.3"
 services:
   fastai2-rest:
-    build: ./fastai2-rest
-    container_name: fastai2-rest
+    build: ./fastai-rest
+    container_name: fastai-rest
     environment:
       PORT: 8080
   nginx-frontend:
@@ -12,6 +12,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "/docker/fastai2-docker-deploy/nginx-frontend/html:/usr/share/nginx/html:ro"
-      - "/docker/fastai2-docker-deploy/nginx-frontend/config:/etc/nginx/conf.d:ro"
+      - "/docker/fastai-docker-deploy/nginx-frontend/html:/usr/share/nginx/html:ro"
+      - "/docker/fastai-docker-deploy/nginx-frontend/config:/etc/nginx/conf.d:ro"
       - "/etc/letsencrypt:/etc/letsencrypt:ro"
