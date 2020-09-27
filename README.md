@@ -76,6 +76,17 @@ sudo ufw delete allow 80/tcp
 ```
 The certificates are stored in `/etc/letsencrypt/live/<domainname>`.
 
+### Cronjob for letsencrypt certificate renewal
+
+To `renew` the `letsencrypt certificates` automatically add the following command to the `root` users crontab. This will renew your certificate at the `first day of each month at 00:00`.
+
+```bash
+crontab -e
+
+# add the following line
+0 0 1 * * /usr/bin/certbot renew --pre-hook "docker-compose -f /docker/fastai2-docker-deploy/docker-compose.yml down" --post-hook "docker-compose -f /docker/fastai2-docker-deploy/docker-compose.yml up -d"
+```
+
 ### Clone repository
 
 Clone this `repository` on your Droplet
@@ -97,17 +108,6 @@ wget https://www.meansqua.red/files/model.pkl
 ```bash
 cd /docker/fastai-docker-deploy
 docker-compose build
-```
-
-### Cronjob for letsencrypt certificate renewal
-
-To `renew` the `letsencrypt certificates` automatically add the following command to the `root` users crontab. This will renew your certificate at the `first day of each month at 00:00`.
-
-```bash
-crontab -e
-
-# add the following line
-0 0 1 * * /usr/bin/certbot renew --pre-hook "docker-compose -f /docker/fastai2-docker-deploy/docker-compose.yml down" --post-hook "docker-compose -f /docker/fastai2-docker-deploy/docker-compose.yml up -d"
 ```
 
 ## Run the App
