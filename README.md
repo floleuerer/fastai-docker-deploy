@@ -99,6 +99,17 @@ cd /docker/fastai-docker-deploy
 docker-compose build
 ```
 
+### Cronjob for letsencrypt certificate renewal
+
+To `renew` the `letsencrypt certificates` automatically add the following command to the `root` users crontab. This will renew your certificate at the `first day of each month at 00:00`.
+
+```bash
+crontab -e
+
+# add the following line
+0 0 1 * * /usr/bin/certbot renew --pre-hook "docker-compose -f /docker/fastai2-docker-deploy/docker-compose.yml down" --post-hook "docker-compose -f /docker/fastai2-docker-deploy/docker-compose.yml up -d"
+```
+
 ## Run the App
 
 After successfully building the docker images you can start / stop the app:
